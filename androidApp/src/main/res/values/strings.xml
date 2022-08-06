@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    //Intro
+    <string name="IntroTitle">Enter Your Mobile Number</string>
+    <string name="Warning">By continuing, you agree to the</string>
+    <string name="TM">Terms &amp; Condition</string>
+    <string name="Proceed">Proceed</string>
+    <string name="NotRegistered">Not Registered yet?</string>
+    <string name="SignUp">SignUp</string>
+
+    //Identification
+    <string name="State">State</string>
+    <string name="Parliament">Parliament</string>
+    <string name = "Assembly">Assembly</string>
+    <string name="Booth">Booth</string>
+    <string name="Next">Next</string>
+    //Search
+    <string name="Search">Search</string>
+</resources>
