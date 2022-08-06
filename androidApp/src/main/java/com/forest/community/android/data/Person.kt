@@ -9,9 +9,15 @@ data class Person(
     val address : String,
     val age : Int,
 )
-val PersonMockData = Person(
+val PersonMockData = listOf(Person(
     firstName = "DEVINDER",
     secondName = "KUMAR",
     address = "1B",
     age = 58,
+),Person(
+    firstName = "DEVINDER",
+    secondName = "KUMAR",
+    address = "1B",
+    age = 58,
+)
 )

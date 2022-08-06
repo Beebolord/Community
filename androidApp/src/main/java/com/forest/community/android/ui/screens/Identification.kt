@@ -38,6 +38,7 @@ import com.forest.community.android.NavRoute
 import com.forest.community.android.R
 import com.forest.community.android.ui.Typography
 import com.forest.community.android.ui.fonts
+import com.forest.community.android.ui.util.Next
 import com.forest.community.android.ui.viewmodels.IdentificationViewmodel
 
 @Composable
@@ -257,25 +258,7 @@ fun Identification(navController: NavController) {
             }}
     }
     }
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
-        Button(
-            onClick = {
-                navController.navigate(NavRoute.Search.route)
-            },
-            colors = ButtonDefaults.buttonColors(
-                contentColor = DarkOrange,
-                backgroundColor = DarkOrange
-            ),
-            modifier = Modifier
-                .width(240.dp)
-                .padding(bottom = 16.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.Next),
-                color = Color.White,
-                style = MaterialTheme.typography.h5)
-        }
-    }
+   Next(navController,route= NavRoute.Search.route)
 }
 
 @Composable

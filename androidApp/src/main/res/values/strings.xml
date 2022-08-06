@@ -16,4 +16,8 @@
     <string name="Next">Next</string>
     //Search
     <string name="Search">Search</string>
+
+    //BinaryChoice
+    <string name="President">President</string>
+    <string name="Member">Member</string>
 </resources>

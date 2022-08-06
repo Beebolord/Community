@@ -2,8 +2,10 @@ package com.forest.community.android.ui.screens
 
 import android.media.Image
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -28,12 +30,14 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.ticket.ui.theme.LightOrange
+import com.forest.community.android.NavRoute
 import com.forest.community.android.R
 import com.forest.community.android.data.Person
 import com.forest.community.android.data.PersonMockData
@@ -45,7 +49,13 @@ fun Search(navController: NavController) {
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally ) {
         Spacer(modifier = Modifier.height(30.dp))
         SearchView(state = textState, modifier = Modifier.padding(horizontal = 22.dp))
-        ResultItem(person = PersonMockData)
+        Spacer(modifier = Modifier.height(20.dp))
+        LazyColumn{
+           items(PersonMockData) {person ->
+                ResultItem(person = person,onClick = {navController.navigate(NavRoute.Identification.route) }, navController)
+
+           }
+        }
     }
 }
 @Composable
@@ -55,7 +65,7 @@ fun SearchView(state: MutableState<TextFieldValue>, modifier : Modifier ) {
         onValueChange = { value ->
             state.value = value
         },
-        label = {Text(text= stringResource(id = R.string.Search), fontSize =18.sp, fontFamily = fonts)},
+        placeholder = {Text(text= stringResource(id = R.string.Search), fontSize =18.sp, fontFamily = fonts)},
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
@@ -68,6 +78,7 @@ fun SearchView(state: MutableState<TextFieldValue>, modifier : Modifier ) {
                 modifier = Modifier
                     .padding(15.dp)
                     .size(24.dp)
+                    .clickable {}
             )
         },
         singleLine = true,
@@ -86,35 +97,52 @@ fun SearchView(state: MutableState<TextFieldValue>, modifier : Modifier ) {
 }
 
 @Composable
-fun ResultItem(person : Person) {
-    Card() {
-        Row(modifier = Modifier.fillMaxWidth()) {
+fun ResultItem(person : Person,onClick: ()->Unit, navController : NavController) {
+    Card(modifier = Modifier
+        .height(90.dp)
+        .padding(horizontal = 20.dp, vertical = 10.dp)
+        .fillMaxWidth()
+        .clickable{onClick},
+    shape = RoundedCornerShape(15.dp),
+    backgroundColor = Color.White,
+    elevation = 2.dp) {
+        Row(modifier = Modifier.fillMaxWidth().clickable{navController.navigate(NavRoute.BinaryChoice.route)}) {
             Row(horizontalArrangement = Arrangement.SpaceBetween) {
                 Image(ImageVector.vectorResource(id = R.drawable.ic_baseline_person_outline_24),
                     "person",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.padding(15.dp))
-                Column(verticalArrangement = Arrangement.SpaceBetween) {
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .fillMaxHeight(),
+                alignment = Alignment.Center)
+                Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxHeight()) {
                     Text(text = "${(person.firstName).uppercase(java.util.Locale.ROOT)} ${
                         (person.secondName).uppercase(java.util.Locale.ROOT)
                     }",
                         style = MaterialTheme.typography.subtitle1,
                         fontFamily = fonts,
+                        color = Color.Black,
+                        modifier = Modifier.padding(top = 10.dp),
                         fontWeight = FontWeight.SemiBold)
                     Text(text = "Address: ${person.address}",
                         style = MaterialTheme.typography.body2,
-                        fontFamily = fonts)
+                        fontFamily = fonts,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(bottom = 10.dp)
+                    )
                 }
             }
-            Column(verticalArrangement =  Arrangement.Bottom) {
-                Text(text = "Age: ${person.age}", style = MaterialTheme.typography.body2, fontFamily = fonts)
+            Column(verticalArrangement =  Arrangement.Bottom, modifier = Modifier.fillMaxSize()) {
+                Text(text = "Age: ${person.age}",
+                    style = MaterialTheme.typography.body2,
+                    color = Color.Gray,
+                    fontFamily = fonts,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                textAlign = TextAlign.End)
             }
 
         }
     }
-}
-@Preview(showBackground = true)
-@Composable
-fun SearchViewPreview() {
-   ResultItem(person = PersonMockData)
 }
