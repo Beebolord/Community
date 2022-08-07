@@ -38,12 +38,18 @@ val Typography = Typography(
         ),
     h5 = TextStyle(
             fontFamily = fonts,
-            fontSize = 20.sp
+            fontSize = 14.sp,
+            color = Color.Black
     ),
     h6 = TextStyle(
         fontFamily = fonts,
         color = Color.Black,
         fontWeight = FontWeight.SemiBold
+    ),
+    body2 = TextStyle(
+        fontFamily = fonts,
+        color = Color.Gray
     )
+
 
 )

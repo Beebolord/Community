@@ -1,5 +1,10 @@
 package com.forest.community.android.ui.screens
 
+import android.app.Activity
+import android.content.ContentValues
+import android.content.Context
+import android.content.ContextWrapper
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.ticket.ui.theme.DarkOrange
 import com.example.ticket.ui.theme.LightPink
@@ -40,16 +46,29 @@ import com.forest.community.android.ui.Typography
 import com.forest.community.android.ui.fonts
 import com.forest.community.android.ui.util.Next
 import com.forest.community.android.ui.viewmodels.IdentificationViewmodel
+import com.forest.community.android.ui.viewmodels.LoginScreenViewModel
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun Identification(navController: NavController) {
-    val viewmodel = IdentificationViewmodel()
+    var viewModel: LoginScreenViewModel = viewModel()
+    var viewmodel : IdentificationViewmodel = viewModel()
     var mSelectedText by remember { mutableStateOf("") }
     var stateText by remember { mutableStateOf("") }
     var parliamentSelectedText by remember { mutableStateOf("") }
     var assemblyText by remember { mutableStateOf("") }
     var boothText by remember { mutableStateOf("") }
-
+    fun Context.findActivity(): Activity? = when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
+    }
     var mTextFieldSize by remember { mutableStateOf(Size.Zero)}
     var mExpanded by remember { mutableStateOf(false) }
     var list by remember{mutableStateOf(listOf(""))}

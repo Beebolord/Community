@@ -51,6 +51,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "341518174665-4sskjf5ombp1lvu7lp8mj88nsau1el04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.forest.community.android",
+            "certificate_hash": "bc8f26201824bb0aef9f308be0448995c64b377c"
+          }
+        },
+        {
           "client_id": "341518174665-eql0dnfo1u39vihadvjnm4ks67ro5up5.apps.googleusercontent.com",
           "client_type": 3
         }

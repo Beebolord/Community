@@ -19,15 +19,30 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 private var storedVerificationId: String? = ""
 private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-@HiltViewModel
-class LoginScreenViewModel() : ViewModel() {
+lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
+@HiltViewModel
+class LoginScreenViewModel @Inject constructor() : ViewModel() {
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     val loadingState = MutableStateFlow(LoadingState.IDLE)
+    lateinit var baseBuilder: PhoneAuthOptions.Builder
 
+    fun setActivity(activity: Activity) {
+        baseBuilder = PhoneAuthOptions.newBuilder().setActivity(activity)
+    }
+    fun send(activity : Activity, mobileNum: String) {
+        val options = baseBuilder
+            .setPhoneNumber(mobileNum)       // Phone number to verify
+            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+            .setActivity(activity)                 // Activity (for callback binding)
+            .setCallbacks(com.forest.community.android.ui.screens.callbacks)          // OnVerificationStateChangedCallbacks
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
     fun signInWithEmailAndPassword(email: String, password: String) = viewModelScope.launch {
         try {
             loadingState.emit(LoadingState.LOADING)
@@ -37,6 +52,7 @@ class LoginScreenViewModel() : ViewModel() {
             loadingState.emit(LoadingState.error(e.localizedMessage))
         }
     }
+
     fun signWithCredential(credential: AuthCredential) = viewModelScope.launch {
         try {
             loadingState.emit(LoadingState.LOADING)
@@ -54,18 +70,11 @@ class LoginScreenViewModel() : ViewModel() {
     // [START on_start_check_user]
     // [END on_start_check_user]
 
-    fun startPhoneNumberVerification(context : Activity, phoneNumber: String) {
-        // [START start_phone_auth]
-        val options = PhoneAuthOptions.newBuilder(Firebase.auth)
-            .setPhoneNumber(phoneNumber)       // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setCallbacks(callbacks)
-            .setActivity(context)// OnVerificationStateChangedCallbacks
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-        // [END start_phone_auth]
+    fun Context.findActivity(): Activity? = when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
     }
-
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
         // [START verify_with_code]
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)

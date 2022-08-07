@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val navController = rememberNavController()
         NavHost(
             navController = navController,
-            startDestination = NavRoute.BinaryChoice.route,
+            startDestination = NavRoute.Intro.route,
         ) {
             composable(NavRoute.Intro.route) {
                 Intro(navController = navController)

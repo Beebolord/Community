@@ -7,6 +7,10 @@
     <string name="Proceed">Proceed</string>
     <string name="NotRegistered">Not Registered yet?</string>
     <string name="SignUp">SignUp</string>
+    <string name="OTP">Enter OTP</string>
+    <string name="EnterCode">Enter the verification code sent to</string>
+    <string name="WaitingOTP">Waiting for OTP</string>
+    <string name="Verify">Verify &amp; Continue</string>
 
     //Identification
     <string name="State">State</string>
@@ -14,6 +18,7 @@
     <string name = "Assembly">Assembly</string>
     <string name="Booth">Booth</string>
     <string name="Next">Next</string>
+
     //Search
     <string name="Search">Search</string>
 
