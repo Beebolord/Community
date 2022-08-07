@@ -48,7 +48,8 @@ fun Verification(navController: NavController, userNumber:String?) {
     var viewModel: LoginScreenViewModel = viewModel()
     var userEmail by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
-
+    val context = LocalContext.current
+    val activity = LocalContext.current as Activity
     val snackbarHostState = remember { SnackbarHostState() }
     val state by viewModel.loadingState.collectAsState()
 
@@ -144,7 +145,7 @@ fun Verification(navController: NavController, userNumber:String?) {
                             Text(text = userNumber ?: "Sorry")
                         },
                         onClick = {
-                            viewModel.startPhoneNumberVerification("+14189305435")
+                            viewModel.startPhoneNumberVerification(context = activity,phoneNumber ="+14189305435")
                         }
                     )
                     Text(

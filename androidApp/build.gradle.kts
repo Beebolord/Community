@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("com.google.gms.google-services")
+    id ("dagger.hilt.android.plugin")
+    id ("kotlin-kapt")
+
 }
 val composeVersion = "1.2.0"
 android {
@@ -59,5 +62,9 @@ dependencies {
     //Firebase
     implementation ("com.google.firebase:firebase-auth-ktx:21.0.6")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.9")
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.38.1")
+    kapt("com.google.dagger:hilt-compiler:2.38.1")
 
 }
