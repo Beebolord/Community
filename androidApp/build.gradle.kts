@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-
+    id("com.google.gms.google-services")
 }
 val composeVersion = "1.2.0"
 android {
@@ -43,6 +43,7 @@ dependencies {
     implementation ("androidx.compose.ui:ui-tooling:1.1.1")
     // Integration with ViewModels
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1")
+    implementation("com.google.android.gms:play-services-auth:20.2.0")
     // UI Tests
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.1.1")
     //Navigation
@@ -54,5 +55,9 @@ dependencies {
     implementation ("androidx.activity:activity-compose:1.4.0")
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling:$composeVersion")
+
+    //Firebase
+    implementation ("com.google.firebase:firebase-auth-ktx:21.0.6")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.9")
 
 }

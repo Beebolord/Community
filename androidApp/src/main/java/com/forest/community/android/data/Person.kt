@@ -8,6 +8,10 @@ data class Person(
     val picture : Image? = null,
     val address : String,
     val age : Int,
+    val state: String = "",
+    val parliament: String = "",
+    val assembly: String= "",
+    val booth : String = ""
 )
 val PersonMockData = listOf(Person(
     firstName = "DEVINDER",

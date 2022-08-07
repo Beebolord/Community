@@ -10,16 +10,22 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.ticket.ui.theme.CommunityTheme
 import com.forest.community.android.ui.Intro
 import com.forest.community.android.ui.screens.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
-
+private lateinit var auth: FirebaseAuth
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        auth = Firebase.auth
         super.onCreate(savedInstanceState)
         setContent {
             CommunityTheme() {
@@ -48,16 +54,18 @@ class MainActivity : AppCompatActivity() {
             composable(NavRoute.Search.route) {
                 Search(navController = navController)
             }
-            composable(NavRoute.Verification.route) {
-                Verification(navController = navController)
-            }
-
             composable(NavRoute.PhotoId.route) {
                 PhotoId(navController = navController)
             }
 
             composable(NavRoute.BinaryChoice.route) {
                 BinaryChoice(navController = navController)
+            }
+            composable(
+                "verification/{userId}",
+                arguments = listOf(navArgument("userId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                Verification(navController = navController, userNumber = backStackEntry.arguments?.getString("userId"))
             }
         }
     }

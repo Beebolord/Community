@@ -39,7 +39,7 @@ fun BinaryChoice(navController: NavController) {
             ImageCard(navController, R.drawable.president1, R.string.President)
             ImageCard(navController, R.drawable.community, R.string.Member)
         }
-        Next(navController, route=NavRoute.Verification.route)
+        Next(navController, route="verification/+14189305435")
     }
 }
 
